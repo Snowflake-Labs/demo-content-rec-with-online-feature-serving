@@ -3,10 +3,24 @@
 -- Step 2: Create Feature Store Components
 -- ============================================
 
+-- ============================================
+-- Prerequisites:
+--   Run 01_create_database.sql first
+--   This script uses CONTENT_REC_ROLE
+-- ============================================
+
+-- Switch to the demo role
+USE ROLE CONTENT_REC_ROLE;
+
+-- Use the demo database and warehouse
 USE DATABASE CONTENT_REC_DEMO;
+USE WAREHOUSE CONTENT_REC_WH;
 USE SCHEMA FEATURES;
 
--- Create the click events source table
+-- ============================================
+-- 1. Create click events source table
+-- ============================================
+
 -- This table stores raw click events from the web application
 CREATE TABLE IF NOT EXISTS CLICK_EVENTS (
     event_id STRING DEFAULT UUID_STRING(),
@@ -17,7 +31,11 @@ CREATE TABLE IF NOT EXISTS CLICK_EVENTS (
     PRIMARY KEY (event_id)
 );
 
--- Create index for faster lookups by user_id
+-- ============================================
+-- 2. Create user features table
+-- ============================================
+
+-- This table stores aggregated user features for recommendations
 CREATE OR REPLACE TABLE USER_FEATURES (
     user_id STRING NOT NULL PRIMARY KEY,
     recent_click_ids ARRAY,           -- Last 10 clicked product IDs
@@ -28,11 +46,19 @@ CREATE OR REPLACE TABLE USER_FEATURES (
     updated_at TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP()
 );
 
+-- ============================================
+-- 3. Create stream for change tracking
+-- ============================================
+
 -- Create a stream on click events to track changes (for batch processing if needed)
 CREATE OR REPLACE STREAM CLICK_EVENTS_STREAM ON TABLE CLICK_EVENTS
     APPEND_ONLY = TRUE;
 
--- Create a stored procedure to update user features when a click occurs
+-- ============================================
+-- 4. Create stored procedure for feature updates
+-- ============================================
+
+-- This procedure updates user features when a click occurs
 CREATE OR REPLACE PROCEDURE UPDATE_USER_FEATURES(
     p_user_id STRING,
     p_product_id STRING,
@@ -92,5 +118,18 @@ BEGIN
 END;
 $$;
 
+-- ============================================
+-- Verification
+-- ============================================
+
+-- Show created objects
+SHOW TABLES IN SCHEMA CONTENT_REC_DEMO.FEATURES;
+SHOW STREAMS IN SCHEMA CONTENT_REC_DEMO.FEATURES;
+SHOW PROCEDURES IN SCHEMA CONTENT_REC_DEMO.FEATURES;
+
 -- Success message
-SELECT 'Feature Store tables and procedures created successfully!' AS STATUS;
+SELECT 
+    'Feature Store components created successfully!' AS STATUS,
+    CURRENT_ROLE() AS ROLE_USED,
+    CURRENT_DATABASE() AS DATABASE_USED,
+    CURRENT_SCHEMA() AS SCHEMA_USED;

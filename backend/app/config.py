@@ -9,11 +9,14 @@ class Settings(BaseSettings):
     # Snowflake Connection
     snowflake_account: str = ""
     snowflake_user: str = ""
-    snowflake_password: str = ""
     snowflake_warehouse: str = "CONTENT_REC_WH"
     snowflake_database: str = "CONTENT_REC_DEMO"
     snowflake_schema: str = "FEATURES"
     snowflake_role: str = "PUBLIC"
+
+    # Authentication (PAT recommended, password as fallback)
+    snowflake_token: str = ""  # PAT (Programmatic Access Token)
+    snowflake_password: str = ""  # Password (legacy)
 
     # Application Settings
     use_mock: bool = True  # Use mock data instead of Snowflake

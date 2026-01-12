@@ -115,12 +115,23 @@ class SnowflakeService:
             connection_params = {
                 "account": self.settings.snowflake_account,
                 "user": self.settings.snowflake_user,
-                "password": self.settings.snowflake_password,
                 "warehouse": self.settings.snowflake_warehouse,
                 "database": self.settings.snowflake_database,
                 "schema": self.settings.snowflake_schema,
                 "role": self.settings.snowflake_role,
             }
+
+            # Authentication: PAT or Password
+            if self.settings.snowflake_token:
+                connection_params["token"] = self.settings.snowflake_token
+                connection_params["authenticator"] = "PROGRAMMATIC_ACCESS_TOKEN"
+            elif self.settings.snowflake_password:
+                connection_params["password"] = self.settings.snowflake_password
+            else:
+                raise ValueError(
+                    "No authentication method configured. "
+                    "Set SNOWFLAKE_TOKEN (PAT) or SNOWFLAKE_PASSWORD"
+                )
             self._session = Session.builder.configs(connection_params).create()
 
         return self._session
@@ -138,6 +149,7 @@ class SnowflakeService:
                 session=session,
                 database=self.settings.snowflake_database,
                 name=self.settings.snowflake_schema,
+                default_warehouse=self.settings.snowflake_warehouse,
             )
 
         return self._feature_store
@@ -282,10 +294,10 @@ class SnowflakeService:
             feature_view=fv,
             keys=[[user_id]],  # List of key values
             feature_names=[
-                "recent_click_ids",
-                "category_preference",
-                "total_clicks",
-                "last_click_timestamp",
+                "RECENT_CLICK_IDS",
+                "CATEGORY_PREFERENCE",
+                "TOTAL_CLICKS",
+                "LAST_CLICK_TIMESTAMP",
             ],
             store_type=StoreType.ONLINE,  # Use online store for low latency
         ).to_pandas()

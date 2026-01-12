@@ -3,7 +3,12 @@
 -- Step 5: Insert Sample Product and User Data
 -- ============================================
 
+-- Switch to the demo role
+USE ROLE CONTENT_REC_ROLE;
+
+-- Use the demo database and warehouse
 USE DATABASE CONTENT_REC_DEMO;
+USE WAREHOUSE CONTENT_REC_WH;
 USE SCHEMA RAW_DATA;
 
 -- Create Products table
@@ -57,23 +62,31 @@ VALUES
 USE SCHEMA FEATURES;
 
 -- Insert sample users with pre-existing preferences
+-- Using INSERT ... SELECT because ARRAY_CONSTRUCT/OBJECT_CONSTRUCT cannot be used in VALUES clause
+
 INSERT INTO USER_FEATURES (user_id, recent_click_ids, category_preference, total_clicks, last_click_timestamp)
-VALUES
-    ('user_demo_001',
-     ARRAY_CONSTRUCT('PROD001', 'PROD002', 'PROD003'),
-     OBJECT_CONSTRUCT('Electronics', 3),
-     3,
-     CURRENT_TIMESTAMP()),
-    ('user_demo_002',
-     ARRAY_CONSTRUCT('PROD006', 'PROD008', 'PROD007', 'PROD010'),
-     OBJECT_CONSTRUCT('Fashion', 4),
-     4,
-     CURRENT_TIMESTAMP()),
-    ('user_demo_003',
-     ARRAY_CONSTRUCT('PROD016', 'PROD017', 'PROD011'),
-     OBJECT_CONSTRUCT('Sports', 2, 'Home', 1),
-     3,
-     CURRENT_TIMESTAMP());
+SELECT 
+    'user_demo_001',
+    ARRAY_CONSTRUCT('PROD001', 'PROD002', 'PROD003'),
+    OBJECT_CONSTRUCT('Electronics', 3),
+    3,
+    CURRENT_TIMESTAMP();
+
+INSERT INTO USER_FEATURES (user_id, recent_click_ids, category_preference, total_clicks, last_click_timestamp)
+SELECT 
+    'user_demo_002',
+    ARRAY_CONSTRUCT('PROD006', 'PROD008', 'PROD007', 'PROD010'),
+    OBJECT_CONSTRUCT('Fashion', 4),
+    4,
+    CURRENT_TIMESTAMP();
+
+INSERT INTO USER_FEATURES (user_id, recent_click_ids, category_preference, total_clicks, last_click_timestamp)
+SELECT 
+    'user_demo_003',
+    ARRAY_CONSTRUCT('PROD016', 'PROD017', 'PROD011'),
+    OBJECT_CONSTRUCT('Sports', 2, 'Home', 1),
+    3,
+    CURRENT_TIMESTAMP();
 
 -- Verify data
 SELECT 'Products inserted: ' || COUNT(*) AS STATUS FROM RAW_DATA.PRODUCTS;
