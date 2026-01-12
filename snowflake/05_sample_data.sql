@@ -65,28 +65,28 @@ USE SCHEMA FEATURES;
 -- Using INSERT ... SELECT because ARRAY_CONSTRUCT/OBJECT_CONSTRUCT cannot be used in VALUES clause
 
 INSERT INTO USER_FEATURES (user_id, recent_click_ids, category_preference, total_clicks, last_click_timestamp)
-SELECT 
-    'user_demo_001',
-    ARRAY_CONSTRUCT('PROD001', 'PROD002', 'PROD003'),
-    OBJECT_CONSTRUCT('Electronics', 3),
-    3,
-    CURRENT_TIMESTAMP();
+SELECT
+    'user_demo_001' AS user_id,
+    ARRAY_CONSTRUCT('PROD001', 'PROD002', 'PROD003') AS recent_click_ids,
+    OBJECT_CONSTRUCT('Electronics', 3) AS category_preference,
+    3 AS total_clicks,
+    CURRENT_TIMESTAMP() AS last_click_timestamp;
 
 INSERT INTO USER_FEATURES (user_id, recent_click_ids, category_preference, total_clicks, last_click_timestamp)
-SELECT 
-    'user_demo_002',
-    ARRAY_CONSTRUCT('PROD006', 'PROD008', 'PROD007', 'PROD010'),
-    OBJECT_CONSTRUCT('Fashion', 4),
-    4,
-    CURRENT_TIMESTAMP();
+SELECT
+    'user_demo_002' AS user_id,
+    ARRAY_CONSTRUCT('PROD006', 'PROD008', 'PROD007', 'PROD010') AS recent_click_ids,
+    OBJECT_CONSTRUCT('Fashion', 4) AS category_preference,
+    4 AS total_clicks,
+    CURRENT_TIMESTAMP() AS last_click_timestamp;
 
 INSERT INTO USER_FEATURES (user_id, recent_click_ids, category_preference, total_clicks, last_click_timestamp)
-SELECT 
-    'user_demo_003',
-    ARRAY_CONSTRUCT('PROD016', 'PROD017', 'PROD011'),
-    OBJECT_CONSTRUCT('Sports', 2, 'Home', 1),
-    3,
-    CURRENT_TIMESTAMP();
+SELECT
+    'user_demo_003' AS user_id,
+    ARRAY_CONSTRUCT('PROD016', 'PROD017', 'PROD011') AS recent_click_ids,
+    OBJECT_CONSTRUCT('Sports', 2, 'Home', 1) AS category_preference,
+    3 AS total_clicks,
+    CURRENT_TIMESTAMP() AS last_click_timestamp;
 
 -- Verify data
 SELECT 'Products inserted: ' || COUNT(*) AS STATUS FROM RAW_DATA.PRODUCTS;

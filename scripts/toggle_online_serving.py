@@ -77,13 +77,12 @@ def get_status(session, fs):
     print("=" * 50)
 
     try:
-        fv = fs.get_feature_view(name="USER_CLICK_FEATURES", version="1")
         fv_list = fs.list_feature_views().to_pandas()
 
         if not fv_list.empty:
             row = fv_list[fv_list["NAME"] == "USER_CLICK_FEATURES"].iloc[0]
             online_config = row.get("ONLINE_CONFIG", "{}")
-            print(f"Feature View: USER_CLICK_FEATURES v1")
+            print("Feature View: USER_CLICK_FEATURES v1")
             print(f"Online Config: {online_config}")
 
             if '"enable": true' in str(online_config).lower():
