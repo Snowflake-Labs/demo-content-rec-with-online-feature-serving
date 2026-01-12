@@ -31,6 +31,24 @@ jobs:
       - name: Run Ruff formatter check
         run: uvx ruff format --check app/ ../scripts/
 
+  sqlfluff:
+    name: SQLFluff (SQL)
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+        with:
+          version: "latest"
+
+      - name: Set up Python
+        run: uv python install 3.12
+
+      - name: Run SQLFluff linter
+        run: uvx sqlfluff lint snowflake/
+
   eslint:
     name: ESLint (TypeScript/React)
     runs-on: ubuntu-latest

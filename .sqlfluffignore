@@ -1,0 +1,8 @@
+# SQLFluff ignore patterns
+# Exclude files with Snowflake ML specific syntax that SQLFluff doesn't support
+
+# Snowflake ML Entity creation (uses SNOWFLAKE.ML.ENTITY syntax)
+snowflake/03_create_entities.sql
+
+# Snowflake ML Feature Views (uses Python API instead)
+snowflake/04_create_feature_views.sql
