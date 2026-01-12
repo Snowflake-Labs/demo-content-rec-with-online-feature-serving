@@ -25,14 +25,11 @@ jobs:
       - name: Set up Python
         run: uv python install 3.12
 
-      - name: Install dependencies
-        run: uv sync --dev
-
       - name: Run Ruff linter
-        run: uv run ruff check app/ ../scripts/
+        run: uvx ruff check app/ ../scripts/
 
       - name: Run Ruff formatter check
-        run: uv run ruff format --check app/ ../scripts/
+        run: uvx ruff format --check app/ ../scripts/
 
   eslint:
     name: ESLint (TypeScript/React)
