@@ -1,0 +1,11 @@
+# SQLFluff ignore patterns
+# Exclude files with Snowflake-specific syntax that SQLFluff doesn't fully support
+
+# Database setup (uses GRANT CREATE DYNAMIC TABLE, SNOWFLAKE.ML.FEATURE_STORE)
+snowflake/01_create_database.sql
+
+# Snowflake ML Entity creation (uses SNOWFLAKE.ML.ENTITY syntax)
+snowflake/03_create_entities.sql
+
+# Snowflake ML Feature Views (uses Python API instead)
+snowflake/04_create_feature_views.sql
