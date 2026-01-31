@@ -1,4 +1,6 @@
-# Content Recommendation with Snowflake Online Feature Serving
+# Demo: Content Recommendation with Snowflake Online Feature Serving
+
+**Disclaimer: This is not an official Snowflake product.**
 
 Real-time product recommendation demo powered by Snowflake Online Feature Serving and Two-Tower architecture. This application demonstrates how to build a personalized recommendation system with real-time embedding updates based on user click behavior.
 
@@ -191,7 +193,7 @@ cd backend
 uv run python ../scripts/setup_feature_store.py
 ```
 
-This script uses the [Snowflake ML Feature Store Python API](https://docs.snowflake.com/ja/developer-guide/snowflake-ml/feature-store/create-and-serve-online-features-python):
+This script uses the [Snowflake ML Feature Store Python API](https://docs.snowflake.com/en/developer-guide/snowflake-ml/feature-store/create-and-serve-online-features-python):
 
 ```python
 from snowflake.ml.feature_store import FeatureStore, FeatureView, Entity
@@ -335,6 +337,8 @@ The debug panel (right side) has three tabs:
 6. **Watch Blend**: The combined embedding balances your interests
 7. **Check Latency**: See real-time feature serving latency (target: < 100ms)
 
-## License
+# License
 
-MIT
+Copyright (c) Snowflake Inc. All rights reserved. Licensed under the Apache 2.0 license.
+
+**Disclaimer: This is not an official Snowflake product.**
