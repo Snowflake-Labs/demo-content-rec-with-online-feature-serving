@@ -1,5 +1,7 @@
 # Demo: Content Recommendation with Snowflake Online Feature Serving
 
+**Disclaimer: This is not an official Snowflake product.**
+
 Real-time product recommendation demo powered by Snowflake Online Feature Serving and Two-Tower architecture. This application demonstrates how to build a personalized recommendation system with real-time embedding updates based on user click behavior.
 
 ## Two-Tower Architecture
