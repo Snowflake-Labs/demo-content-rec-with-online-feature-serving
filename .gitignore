@@ -271,9 +271,12 @@ storybook-static/
 *.temp
 .temp/
 .tmp/
+tmp/
 
 # Vercel
 .vercel/
 
 # Turbo
 .turbo/
+
+.snowflake
