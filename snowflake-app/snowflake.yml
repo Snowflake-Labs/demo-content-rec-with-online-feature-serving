@@ -1,0 +1,40 @@
+definition_version: "2"
+
+entities:
+  recommend_app:
+    type: snowflake-app
+    identifier:
+      name: RECOMMEND_APP
+      database: APPS
+      schema: PUBLIC
+    artifacts:
+      - src: src/*
+        dest: ./src/
+        ignore:
+          - node_modules
+          - .next
+      - src: app/*
+        dest: ./app/
+      - src: components/*
+        dest: ./components/
+      - src: lib/*
+        dest: ./lib/
+      - src: public/*
+        dest: ./public/
+      - src: "*.json"
+        dest: ./
+      - src: "*.mjs"
+        dest: ./
+      - src: "*.ts"
+        dest: ./
+      - src: "*.yml"
+        dest: ./
+        ignore:
+          - snowflake.yml
+      - src: icon.svg
+        dest: ./
+
+    query_warehouse: APP_WAREHOUSE
+    build_eai:
+      name: APPS_BUILD_EAI
+    code_stage: RECOMMEND_APP_CODE

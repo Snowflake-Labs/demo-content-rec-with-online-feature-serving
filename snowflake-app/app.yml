@@ -1,0 +1,11 @@
+install:
+  commands:
+    - ["npm", "ci", "--include=dev"]
+
+run:
+  command: ["node", ".next/standalone/server.js"]
+
+profile:
+  label: "Product Recommender"
+  description: "Real-time product recommendations using Snowflake Online Feature Store and SPCS inference"
+  icon: icon.svg
